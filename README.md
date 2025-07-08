@@ -1,129 +1,59 @@
-# E4S: Fine-Grained Face Swapping via Regional GAN Inversion
+# E4S - Colab Adaptation
 
-[Maomao Li](https://scholar.google.com/citations?user=ym_t6QYAAAAJ&hl=en&oi=ao), 
-[Ge Yuan](https://ygtxr1997.github.io/), 
-[Cairong Wang](), 
-[Zhian Liu](), 
-[Yong Zhang](https://yzhang2016.github.io/), 
-[Yongwei Nie](https://nieyongwei.net/), 
-[Jue Wang](https://juewang725.github.io/), 
-[Dong Xu](https://scholar.google.com/citations?user=7Hdu5k4AAAAJ&hl=en&oi=ao)
+This repository is a minimal adaptation of **E4S: Fine-Grained Face Swapping via Regional GAN Inversion** to run on **Google Colab**.
 
+> 🔗 Original project: [https://github.com/Seasonly/E4S](https://github.com/Seasonly/E4S)
 
-<a href='https://arxiv.org/abs/2310.15081'><img src='https://img.shields.io/badge/ArXiv-2310.15081-red'></a> 
-<a href='https://e4s2023.github.io/'><img src='https://img.shields.io/badge/Project-Page-Green'></a>
-[![GitHub](https://img.shields.io/github/stars/e4s2023/E4S2023?style=social)](https://github.com/e4s2023/E4S2023)
+---
 
+## 🚀 How to run it?
 
-<div align="center">
-    <img src='assets/img/illustration_overall.png'/>
-</div>
+### 🔹 1. Open the notebook
 
-## 🦴 Abstract
+Open [`e4s_swap_colab.ipynb`](e4s_swap_colab.ipynb) in **Google Colab**.
 
-### TL;DR: A Face Swapping and Editing Framework Based on StyleGAN Latent Space
+Run all the cells step by step until the last one to perform the face swap.
 
+---
 
-## 📋 Changelog
+### 🔹 2. Upload your inputs
 
-- **2023.10.21** Code and paper are released!
+- Create a folder (e.g. `input/`)
+- Put inside:
+  - the **source image**
+  - the **target image** or **video**
 
-## 🏗️ Todo
+Update the input paths in the notebook accordingly.
 
-- [x] Release the image and video face swapping code
-- [ ] Delete unuseful code
-- [ ] Release the face editing code
+---
 
-## 🚀 Differences with [E4S(CVPR2023)](https://github.com/e4s2022/e4s)
+### 🔹 3. Launch the inference
 
-1. Re-coloring modules producing more consistent **facial color**
-2. Inpainting the mismatch **face shape**
-3. Stable and temporal-consistent **video face swapping** results
+- Modify the config and weights paths if needed.
+- Results will be saved in the `output/` folder by default.
 
-## 🌏 Setup Environment
-Our code is mainly based on python3.10+, pytorch2.0+, cuda12+, etc. 
-```shell
-conda create -n e4s2023 python=3.10
-conda activate e4s2023
-pip install -r requirements.txt
-export PYTHONPATH=$PWD
+---
+
+## ⚠️ Important Notes
+
+Run the following **before anything else** in a Colab cell:
+
+```python
+!pip install numpy==1.26
 ```
 
-## 🍱 Pretrained Weights
+Then restart the Colab runtime (menu Runtime > Restart runtime) and re-run the notebook.
 
-All the weights (including our E4S weights and other third_party weights) can be downloaded from [here](https://mail2sysueducn-my.sharepoint.com/:f:/g/personal/yuang7_mail2_sysu_edu_cn/ErbjYVK4hZlDtsK8hK7REKMBmZGvRRYyz-rQBPj_siUT6Q).
-Please put all of them into `./pretrained` like this:
+---
 
-```shell
-pretrained
-├── codeformer/
-├── E4S/
-├── face_blender/
-├── faceseg/
-├── faceVid2Vid/
-├── GPEN/
-├── inpainting/
-├── pixel2style2pixel/
-├── pose/
-├── SwinIR/
-└── zhian/
+## 🧹 Optional: Cleanup after unzipping weights
+
+If you unzip pretrained weights in `/content/workspace`, and want to move the files up and clean:
+
+```bash
+!unzip -q /content/workspace/e4s_model.zip -d /content/workspace/
+!mv /content/workspace/e4s_model/* /content/workspace/
+!rm -r /content/workspace/e4s_model
+!rm /content/workspace/e4s_model.zip
 ```
-## 🍳 WebUI Inference Demo
-
-Run face swapping gradio web-ui demo on your machine locally:
-```
-git clone https://github.com/e4s2023/E4S2023.git
-python gradio_swap.py
-```
-
-<div align="center">
-    <img src='assets/img/fig_gradio-cropped.png'/>
-</div>
-
-## 💆‍♀️ Image Face Swapping
-
-<div align="center">
-    <img src='assets/img/fig_sota.png'/>
-</div>
-
-## 💃 Video Face Swapping
-
-We follow [STIT](https://github.com/rotemtzaban/STIT/tree/main) and [AllInOneDeFliker](https://github.com/ChenyangLEI/All-In-One-Deflicker) to make the video face swapping results more stable,
-which is detailed in our [paper](). 
-This repo only contains the [PTI](https://github.com/danielroich/PTI) tuning step of STIT.
-We found that the PTI tuning step is sufficient to help the StyleGAN to generate stable video frames.
-This repo has not incorporated the AllInOneDeFliker code yet.
-You may visit their [GitHub](https://github.com/ChenyangLEI/All-In-One-Deflicker) page for furthermore post-processing on PTI tuning frames.
-
-Click [https://e4s2023.github.io/](https://e4s2023.github.io/) to see our video face swapping results.
-
-<div align="center">
-    <img src='assets/videos/fig_video_1_preview.png'/>
-</div>
-
-<div align="center">
-    <img src='assets/videos/fig_video_2_preview.png'/>
-</div>
-
-## 📎 Citation 
-
-```
-@misc{liE4S
-    Author = {Maomao Li and Ge Yuan and Cairong Wang and Zhian Liu and Yong Zhang and Yongwei Nie and Jue Wang and Dong Xu},
-    Title = {E4S: Fine-Grained Face Swapping via Regional GAN Inversion},
-    Year = {2023},
-    Eprint = {arXiv:xxxx},
-}
-``` 
-
-
-## 💌 Acknowledgements
-
-This repository borrows heavily from [E4S(CVPR2023)](https://github.com/e4s2022/e4s) and [STIT](https://github.com/rotemtzaban/STIT/tree/main). 
-Thanks to the authors for sharing their code and models.
-
-## 📣 Disclaimer
-
-This is not an official product of Tencent.
-All the copyrights of the demo images and audio are from community users. 
-Feel free to contact us if you would like remove them.
+Just change the path to the weights.
